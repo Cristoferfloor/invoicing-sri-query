@@ -17,7 +17,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
   app.useGlobalFilters(new ErroresFilter());
 
-  const puerto = Number(process.env.SRI_QUERY_PORT ?? 3005);
+  // PORT es el puerto interno del contenedor, igual que en el resto de los
+  // servicios. SRI_QUERY_PORT es otra cosa: el puerto del host en el compose.
+  const puerto = Number(process.env.PORT ?? 3005);
   await app.listen(puerto, '0.0.0.0');
 
   new Logger('Bootstrap').log(`sri-query-service escuchando en :${puerto}`);
